@@ -1,0 +1,85 @@
+/* all-posts.css */
+
+#all-posts {
+    max-width: 900px;
+    margin: 4rem auto 6rem auto;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+#all-posts h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.5rem;
+    color: #490d8a;
+    border-bottom: 3px solid #d1bced;
+    padding-bottom: 0.5rem;
+    margin-bottom: 3rem;
+}
+
+#all-posts ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+    list-style: none;
+    padding: 0;
+}
+
+/* Duplicated from index so that they render correctly on the independent all-posts page */
+.post {
+    display: block;
+    width: 250px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 24px rgba(69, 11, 123, 0.2);
+}
+
+.post a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+.post a:hover h3 {
+    color: #450b7b;
+}
+
+.post img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.post-content h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.3rem;
+    margin: 0 0 0.5rem 0;
+    color: #000000;
+    transition: color 0.3s;
+}
+
+.post-content p {
+    font-family: 'Lato', sans-serif;
+    margin: 0 auto;
+    color: #555555;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    #all-posts h2 {
+        font-size: 2rem;
+    }
+}

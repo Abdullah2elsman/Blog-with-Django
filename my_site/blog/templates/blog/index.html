@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Blog{% endblock %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'blog/index.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main>
+        <section id="welcome">
+            <header>
+                <img src="{% static 'blog/images/abdullah_avatar.png' %}" alt="Abdullah - The Author of this blog">
+                <h2>ABDULLAH'S<br>BLOG</h2>
+            </header>
+            <p>Hi, I am Abdullah and I love to blog about tech and the world!</p>
+        </section>
+
+        <section id="latest-posts">
+            <h2>My Latest Thoughts</h2>
+            <ul>
+                {% for post in posts %}
+                    {% include "blog/includes/post.html" %}
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section class="about">
+            <h2>What I Do</h2>
+            <p>I'm a student and a web developer. I'm passionate about building web applications.</p>
+            <p>My goal is to share my knowledge and experiences with the world.</p>
+        </section>
+    </main>
+{% endblock %}

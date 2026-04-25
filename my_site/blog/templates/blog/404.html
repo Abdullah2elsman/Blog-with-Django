@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Page Not Found{% endblock %}
+
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'blog/404.css' %}">
+{% endblock %}
+
+{% block content %}
+  <main class="error-page">
+    <h1>404</h1>
+    <h2>Oops! Page Not Found</h2>
+    <p>It looks like the post you were searching for has wandered off into the woods. Let's get you back on the trail.</p>
+    <a href="{% url 'index' %}" class="btn-home">Return to Home</a>
+  </main>
+{% endblock %}
