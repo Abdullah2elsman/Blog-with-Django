@@ -3,7 +3,7 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block css_files %}
-<link rel="stylesheet" href="{% static 'blog/post-detail.css' %}" />
+<link rel="stylesheet" href="{% static 'blog/post-detail.css' %}?v=3" />
 {% endblock %}
 
 {% block content %}
@@ -22,8 +22,39 @@
     </div>
 </article>
 </section>
+
 <main>
-    {{ post.content|linebreaksbr }}
+    {{ post.content|linebreaks }}
 </main>
+
+<section id="comment-form">
+    <h2>Your Comment</h2>
+    <form action="{% url "post_detail" post.slug %}" method="POST">
+        {% csrf_token %}
+        {% for form_field in comment_form %}
+            <div class="form-control {% if form_field.errors %}invalid{% endif %}">
+                {{ form_field.label_tag }}
+                {{ form_field }}
+                {{ form_field.errors }}
+            </div>
+        {% endfor %}
+        <button type="submit">Submit Comment</button>
+    </form>
+</section>
+
+<section id="comments">
+    <h2>Comments</h2>
+    <ul>
+        {% for comment in post.comments.all %}
+            <li>
+                <p class="comment-author">
+                    <span class="avatar">{{ comment.user_name|slice:":1"|upper }}</span>
+                    {{ comment.user_name }}
+                </p>
+                <p>{{ comment.text|linebreaks }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</section>
 
 {% endblock %}

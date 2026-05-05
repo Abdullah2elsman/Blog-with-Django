@@ -1,10 +1,15 @@
-from django.shortcuts import get_object_or_404, render        
-from django.views.generic import ListView, DetailView
+from django.shortcuts import render
+from django.views.generic import ListView
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views import View
+
 from .models import Post
+from .forms import CommentForm
 
 class StartingPageView(ListView):
     template_name = 'blog/index.html'
-    model =Post
+    model = Post
     ordering = ['-date']
     context_object_name = 'posts'
 
@@ -15,15 +20,35 @@ class StartingPageView(ListView):
 
 class PostListView(ListView):
     template_name = 'blog/all-posts.html'
-    model =Post
+    model = Post
     ordering = ['-date']
     context_object_name = 'all_posts'
 
-class PostDetailView(DetailView):
+class PostDetailView(View):
     template_name = 'blog/post-detail.html'
     model = Post
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['post_tags'] = self.object.tags.all()
-        return context
+    def get(self, request, slug):
+        post = Post.objects.get(slug=slug)
+        context = {
+            'post': post,
+            'post_tags': post.tags.all(),
+            'comment_form': CommentForm()
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, slug):
+        comment_form = CommentForm(request.POST)
+        post = Post.objects.get(slug=slug)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return HttpResponseRedirect(reverse('post_detail', args=[slug]))
+        
+        context = {
+            'post': post,
+            'post_tags': post.tags.all(),
+            'comment_form': comment_form
+        }
+        return render(request, self.template_name, context)
