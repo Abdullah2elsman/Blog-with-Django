@@ -14,6 +14,19 @@
         <span class="tag">{{ tag }}</span>
     {% endfor %}
 </div>
+<div id="read-later">
+<form action="{% url 'read-later' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="post_id" value="{{ post.id }}">
+    <button> 
+        {% if is_saved_for_later %}
+            Remove from "Read Later" List
+        {% else %}
+            Read Later
+        {% endif %}
+     </button>
+</form>
+</div>
 <article>
     <img src="{{ post.image.url }}" alt="{{ post.title }}">
     <address><a href="mailto:{{ post.author.email_address }}">{{ post.author }}</a></address>
@@ -29,7 +42,7 @@
 
 <section id="comment-form">
     <h2>Your Comment</h2>
-    <form action="{% url "post_detail" post.slug %}" method="POST">
+    <form action="{% url "post-detail" post.slug %}" method="POST">
         {% csrf_token %}
         {% for form_field in comment_form %}
             <div class="form-control {% if form_field.errors %}invalid{% endif %}">
